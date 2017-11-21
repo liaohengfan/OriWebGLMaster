@@ -14,8 +14,8 @@ class Demo{
 
     eidtorWebGL(){
         const GL:WebGLRenderingContext=this.gl;
-        //new DrawAPoint(GL,this.container); //绘制一个点
-        new ClickedPoints(GL,this.container);//鼠标点击绘制点
+        new DrawAPoint(GL,this.container); //绘制一个点
+        //new ClickedPoints(GL,this.container);//鼠标点击绘制点
     }
 
 
