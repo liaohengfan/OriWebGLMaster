@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outFile": "dist/earth.amd.js",
+    "module": "amd",
+    "target": "es5",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments":true,
+    "lib": [ "es2015", "dom" ],
+    "noImplicitAny": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "sourceMap": false
+  },
+  "files": [
+    "src/app.ts"
+  ],
+  "exclude": [
+    "node_modules/*"
+  ]
+}

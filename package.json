@@ -1,0 +1,37 @@
+{
+  "name": "LittlePlanetView",
+  "version": "1.0.0",
+  "description": "webpack typescript learn",
+  "main": "index.js",
+  "dependencies": {
+    "tween.js":"",
+    "d3":"",
+    "underscore": "",
+    "@types/tween.js":"",
+    "@types/d3":"",
+    "@types/underscore":""
+  },
+  "devDependencies": {
+    "typescript": "",
+    "path": "^0.12.7",
+    "webpack": "",
+    "typings": "",
+    "tslint": "",
+    "tslint-loader": "",
+    "style-loader": "",
+    "url-loader": "",
+    "html-loader": "",
+    "awesome-typescript-loader": "",
+    "html-webpack-plugin": "",
+    "copy-webpack-plugin": "",
+    "file-loader": "",
+    "webpack-dev-server": "",
+    "css-loader": ""
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --devtool eval --progress --colors --content-base build"
+  },
+  "author": "liaohengfan@yeah.net",
+  "license": "ISC"
+}
