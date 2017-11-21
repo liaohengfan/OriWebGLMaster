@@ -1,8 +1,7 @@
 import * as d3 from 'd3';
-import {getWebGLContext} from './libs/oriwebgl/Utils';
+import {getWebGLContext} from './com/base/Utils';
 import './common.css';
-import DrawAPoint from "./com/chapter2/DrawAPoint";
-import ClickedPoints from "./com/chapter2/ClickedPoints";
+import VertexBuffer from "./com/chapter3/VertexBuffer";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -15,7 +14,8 @@ class Demo{
     eidtorWebGL(){
         const GL:WebGLRenderingContext=this.gl;
         //new DrawAPoint(GL,this.container); //绘制一个点
-        new ClickedPoints(GL,this.container);//鼠标点击绘制点
+        //new ClickedPoints(GL,this.container);//鼠标点击绘制点
+        new VertexBuffer(GL,this.container);//顶点缓冲对象
     }
 
 
@@ -53,8 +53,6 @@ class Demo{
         var height_:number=this.container.clientHeight;
         this.canvas.width=width_;
         this.canvas.height=height_;
-        //this.canvas.width=400;
-        //this.canvas.height=400;
     }
 
 }

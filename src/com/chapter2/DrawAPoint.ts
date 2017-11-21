@@ -1,29 +1,20 @@
-import {initShaders} from './../../libs/oriwebgl/Utils';
-import {GLSLTools} from './../../libs/oriwebgl/GLSLTools';
-import ILearnDraw from "../ILearnDraw";
+import {initShaders} from '../base/Utils';
+import {GLSLTools} from '../base/GLSLTools';
+import ILearnDraw, {DrawGLContainerBase} from "../ILearnDraw";
 /**
  * 章2 - 1
  * 绘制一个点
  * @param gl
  * @constructor
  */
-class DrawAPoint implements ILearnDraw{
-    gl: any;
-    container: HTMLElement;
+class DrawAPoint extends DrawGLContainerBase{
     constructor(gl:any,container:HTMLElement){
-        this.gl=gl;
-        this.container=container;
-        GLSLTools.getGLSL('./assets/glsls/chapter2/','DrawAPoint',(vshader:string,fshader:string)=>{
-            this.init(vshader,fshader);
-        });
+        super(gl,container);
+        this.getGLSL('./assets/glsls/chapter2/','DrawAPoint')
     }
 
-    init(vshader: string, fshader: string): boolean {
+    init(): boolean {
         let gl:any=this.gl;
-        if(!initShaders(gl,vshader,fshader)){
-            console.log('Filed to init shaders!');
-            return;
-        }
         let a_Position:any=gl.getAttribLocation(gl.program,'a_Position');
         let a_PointSize:any=gl.getAttribLocation(gl.program,'a_PointSize');
         let a_Color:any=gl.getAttribLocation(gl.program,'a_Color');
