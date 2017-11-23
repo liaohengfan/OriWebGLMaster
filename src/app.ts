@@ -6,10 +6,15 @@ import Translated from "./com/chapter3/Translated";
 import Rotated from "./com/chapter3/Rotated";
 import Matrix from "./com/chapter3/Matrix";
 import RotatedMatrix4 from "./com/chapter4/RotatedMatrix4";
+import RotatedTranslated from "./com/chapter4/RotatedTranslated";
+import {DrawGLContainerBase} from "./com/ILearnDraw";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
     gl:WebGLRenderingContext=null;
+
+    curDrawBase:DrawGLContainerBase=null;
+
     constructor(){
         console.log("Hello typescript webpack ori WebGL!!!!");
         this.init();
@@ -29,11 +34,13 @@ class Demo{
         //new Matrix(GL,this.container);//矩阵操作
 
         //章节4
-        new RotatedMatrix4(GL,this.container);//Matrix4 操作
+        //new RotatedMatrix4(GL,this.container);//Matrix4 操作
+        this.curDrawBase=new RotatedTranslated(GL,this.container);//Matrix4 操作 平移旋转
     }
 
 
     init(){
+        const THAT:Demo = this;
         let container_:any=d3.select("#webgl_div");
         this.container = container_.node() as HTMLElement;
         let canvas_:any=container_.append('canvas');
@@ -56,9 +63,17 @@ class Demo{
 
         /**     * 动画     */
         function enterframe(){
+            THAT.update();
             requestAnimationFrame(enterframe);
         }
         enterframe();
+    }
+
+    /**     * 更新     */
+    update():void{
+        if(this.curDrawBase){
+            this.curDrawBase.update();
+        }
     }
 
     /**     * 窗口大小变化     */
