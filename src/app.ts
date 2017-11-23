@@ -3,6 +3,9 @@ import {getWebGLContext} from './com/base/Utils';
 import './common.css';
 import VertexBuffer from "./com/chapter3/VertexBuffer";
 import Translated from "./com/chapter3/Translated";
+import Rotated from "./com/chapter3/Rotated";
+import Matrix from "./com/chapter3/Matrix";
+import RotatedMatrix4 from "./com/chapter4/RotatedMatrix4";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -14,12 +17,19 @@ class Demo{
 
     eidtorWebGL(){
         const GL:WebGLRenderingContext=this.gl;
+
+        //章节2
         //new DrawAPoint(GL,this.container); //绘制一个点
         //new ClickedPoints(GL,this.container);//鼠标点击绘制点
+
+        //章节3
         //new VertexBuffer(GL,this.container);//顶点缓冲对象
-        new Translated(GL,this.container);//变化
+        //new Translated(GL,this.container);//变化
         //new Rotated(GL,this.container);//旋转
-        //new RotatedMatrix(GL,this.container);//旋转矩阵
+        //new Matrix(GL,this.container);//矩阵操作
+
+        //章节4
+        new RotatedMatrix4(GL,this.container);//Matrix4 操作
     }
 
 
