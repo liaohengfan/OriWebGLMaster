@@ -36,10 +36,14 @@ class VertexBuffer extends DrawGLContainerBase{
         this.u_FragColor=GL.getUniformLocation(this.glProgram,'u_FragColor');
 
         //初始化顶点缓冲数据
-        let l:number=this.initVertexBuffer([
+        /*let l:number=this.initVertexBuffer([//三角形
             0.0,0.5,
             -0.5,-0.5,
             0.5,-0.5
+        ]);*/
+
+        let l:number=this.initVertexBuffer([//矩形
+            -0.5,0.5, -0.5,-0.5, 0.5,0.5, 0.5,-0.5
         ]);
         if(l<=0){
             msg('绑定顶点缓冲失败')
@@ -62,8 +66,8 @@ class VertexBuffer extends DrawGLContainerBase{
 
         //面
         //GL.drawArrays(GL.TRIANGLES,0,l);//三角形
-        //GL.drawArrays(GL.TRIANGLE_STRIP,0,l);//三角带
-        GL.drawArrays(GL.TRIANGLE_FAN,0,l);//扇
+        GL.drawArrays(GL.TRIANGLE_STRIP,0,l);//三角带
+        //GL.drawArrays(GL.TRIANGLE_FAN,0,l);//扇
 
         return true;
     }
