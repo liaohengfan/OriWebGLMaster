@@ -10,15 +10,10 @@ class VertexBuffer extends DrawGLContainerBase{
         this.getGLSL('./assets/glsls/chapter3/','vertexBuffer');
     }
 
-    initVertexBuffer():number{
+    initVertexBuffer(verts:Array<number>,step:number=2):number{
         let l:number=0;
-        let step:number=2;
         let gl:WebGLRenderingContext=this.gl;
-        let vertices:Float32Array=new Float32Array([
-            0.0,0.5,
-            -0.5,-0.5,
-            0.5,-0.5
-        ]);
+        let vertices:Float32Array=new Float32Array(verts);
         l=vertices.length/step;
         let vertexBuffer:WebGLBuffer=gl.createBuffer();
         if(!vertexBuffer){
@@ -41,7 +36,11 @@ class VertexBuffer extends DrawGLContainerBase{
         this.u_FragColor=GL.getUniformLocation(this.glProgram,'u_FragColor');
 
         //初始化顶点缓冲数据
-        let l:number=this.initVertexBuffer();
+        let l:number=this.initVertexBuffer([
+            0.0,0.5,
+            -0.5,-0.5,
+            0.5,-0.5
+        ]);
         if(l<=0){
             msg('绑定顶点缓冲失败')
         }
@@ -59,7 +58,12 @@ class VertexBuffer extends DrawGLContainerBase{
         //绘制线条
         //GL.drawArrays(GL.LINES,0,l);//线段  奇 偶绘制  单一忽略
         //GL.drawArrays(GL.LINE_STRIP,0,l);//线条
-        GL.drawArrays(GL.LINE_LOOP,0,l);//闭合线条
+        //GL.drawArrays(GL.LINE_LOOP,0,l);//闭合线条
+
+        //面
+        //GL.drawArrays(GL.TRIANGLES,0,l);//三角形
+        //GL.drawArrays(GL.TRIANGLE_STRIP,0,l);//三角带
+        GL.drawArrays(GL.TRIANGLE_FAN,0,l);//扇
 
         return true;
     }

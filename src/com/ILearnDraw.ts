@@ -25,7 +25,7 @@ class DrawGLContainerBase implements ILearnDraw{
      * @param {string} name
      */
     getGLSL(url:string,name:string){
-        GLSLTools.getGLSL('./assets/glsls/chapter3/','vertexBuffer',(vshader:string,fshader:string)=> {
+        GLSLTools.getGLSL(url,name,(vshader:string,fshader:string)=> {
             this.initShader(vshader,fshader);
         });
     }
