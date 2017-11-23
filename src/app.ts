@@ -2,9 +2,7 @@ import * as d3 from 'd3';
 import {getWebGLContext} from './com/base/Utils';
 import './common.css';
 import VertexBuffer from "./com/chapter3/VertexBuffer";
-//import Translate from "./com/chapter3/Translate";
-//import Rotated from "./com/chapter3/Rotated";
-//import RotatedMatrix from "./com/chapter3/RotatedMatrix";
+import Translated from "./com/chapter3/Translated";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -18,8 +16,8 @@ class Demo{
         const GL:WebGLRenderingContext=this.gl;
         //new DrawAPoint(GL,this.container); //绘制一个点
         //new ClickedPoints(GL,this.container);//鼠标点击绘制点
-        new VertexBuffer(GL,this.container);//顶点缓冲对象
-        //new Translate(GL,this.container);//变化
+        //new VertexBuffer(GL,this.container);//顶点缓冲对象
+        new Translated(GL,this.container);//变化
         //new Rotated(GL,this.container);//旋转
         //new RotatedMatrix(GL,this.container);//旋转矩阵
     }
