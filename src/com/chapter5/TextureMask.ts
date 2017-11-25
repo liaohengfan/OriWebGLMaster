@@ -1,7 +1,7 @@
 import {DrawGLContainerBase} from "../ILearnDraw";
 import {msg} from "../tools/LHFTools";
 
-class TextureQuad extends DrawGLContainerBase{
+class TextureMask extends DrawGLContainerBase{
     //状态
     enabled:boolean=false;
 
@@ -9,39 +9,64 @@ class TextureQuad extends DrawGLContainerBase{
     a_Position:number;
     a_TextCoord:number;
     u_Sampler:WebGLUniformLocation;
+    u_SamplerMask:WebGLUniformLocation;
 
     //纹理
     texture:WebGLTexture;
+    textureMask:WebGLTexture;
     image:HTMLImageElement;
+    imageMask:HTMLImageElement;
+    imageTotal:number=0;
+    imageCount:number=0;
 
     pointLength:number=0;
     constructor(gl:any,container:HTMLElement){
         super(gl,container);
-        this.getGLSL('./assets/glsls/chapter5/','TextureQuad');
+        this.getGLSL('./assets/glsls/chapter5/','TextureMask');
     }
 
     /**     * 加载纹理     */
     loadTextures(){
-        let that:TextureQuad=this;
-        let image:HTMLImageElement=this.image=new Image();
-        image.onload=function(){
-            that.initTexture();
+        this.imageTotal=2;
+        this.imageCount=0;
+        let imageTex:HTMLImageElement=this.image=new Image();
+        imageTex.onload=()=>{
+            this.judageImageLoad();
         };
-        image.src='assets/textures/cube/Park2/negx.jpg';
+        let imageMask:HTMLImageElement=this.imageMask=new Image();
+        imageMask.onload=()=>{
+            this.judageImageLoad();
+        };
+        imageTex.src='assets/textures/cube/Park2/negx.jpg';
+        imageMask.src='assets/textures/mask/decal-diffuse.png';
+    }
+
+    /**     * 判断纹理是否全部加载完成     */
+    judageImageLoad(){
+        this.imageCount++;
+        if(this.imageCount>=this.imageTotal){
+            this.initTexture();
+        }
     }
 
     /**     * 初始化纹理     */
     initTexture(){
         const GL:WebGLRenderingContext=this.gl;
         this.texture=this.gl.createTexture();//创建纹理
+        this.textureMask=this.gl.createTexture();//创建纹理
         GL.pixelStorei(GL.UNPACK_FLIP_Y_WEBGL,1);//对纹理图像进行y轴翻转
         GL.activeTexture(GL.TEXTURE0);//开启0 号纹理单元
         GL.bindTexture(GL.TEXTURE_2D,this.texture);//绑定纹理对象
         GL.texParameteri(GL.TEXTURE_2D,GL.TEXTURE_MIN_FILTER,GL.LINEAR);//配置纹理参数
-        GL.texParameteri(GL.TEXTURE_2D,GL.TEXTURE_WRAP_S,GL.CLAMP_TO_EDGE);//配置纹理参数
-        GL.texParameteri(GL.TEXTURE_2D,GL.TEXTURE_WRAP_T,GL.MIRRORED_REPEAT);//配置纹理参数
-        GL.texImage2D(GL.TEXTURE_2D,0,GL.RGB,GL.RGB,GL.UNSIGNED_BYTE,this.image);//配置纹理图像
+        GL.texImage2D(GL.TEXTURE_2D,0,GL.RGBA,GL.RGBA,GL.UNSIGNED_BYTE,this.image);//配置纹理图像
         GL.uniform1i(this.u_Sampler,0);//将纹理传给着色器
+
+
+        GL.activeTexture(GL.TEXTURE1);//开启1 号纹理单元
+        GL.bindTexture(GL.TEXTURE_2D,this.textureMask);//绑定纹理对象
+        GL.texParameteri(GL.TEXTURE_2D,GL.TEXTURE_MIN_FILTER,GL.LINEAR);//配置纹理参数
+        GL.texImage2D(GL.TEXTURE_2D,0,GL.RGBA,GL.RGBA,GL.UNSIGNED_BYTE,this.imageMask);//配置纹理图像
+        GL.uniform1i(this.u_SamplerMask,1);//将纹理传给着色器
 
         //设置顶点大小 颜色 并清空canvas
         GL.clearColor(0.0,0.0,0.0,1.0);
@@ -81,20 +106,15 @@ class TextureQuad extends DrawGLContainerBase{
         this.a_Position=GL.getAttribLocation(this.glProgram,'a_Position');
         this.a_TextCoord=GL.getAttribLocation(this.glProgram,'a_TextCoord');
         this.u_Sampler=GL.getUniformLocation(this.glProgram,'u_Sampler');
+        this.u_SamplerMask=GL.getUniformLocation(this.glProgram,'u_SamplerMask');
 
         //初始化顶点缓冲数据
         let l:number=this.initVertexBuffer(
-            /*[//矩形
+            [//矩形
                 -.5,.5,0,1,
                 -.5,-.5,0,0,
                 .5,.5,1,1,
                 .5,-.5,1,0,
-            ],*/
-            [//矩形 -错位
-                -.5,.5,-.3,1.7,
-                -.5,-.5,-.3,-.2,
-                .5,.5,1.7,1.7,
-                .5,-.5,1.7,-0.2,
             ],
             4
         );
@@ -113,4 +133,4 @@ class TextureQuad extends DrawGLContainerBase{
     }
 
 }
-export default TextureQuad;
+export default TextureMask;

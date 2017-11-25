@@ -13,6 +13,7 @@ import MultiAttriSizeInterleaved from "./com/chapter5/MultiAttriSizeInterleaved"
 import MultiAttributeColor from "./com/chapter5/MultiAttributeColor";
 import ViewFragmentColor from "./com/chapter5/ViewFragmentColor";
 import TextureQuad from "./com/chapter5/TextureQuad";
+import TextureMask from "./com/chapter5/TextureMask";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -47,7 +48,8 @@ class Demo{
         //new MultiAttriSizeInterleaved(GL,this.container);//数组多项顶点数据
         //new MultiAttributeColor(GL,this.container);//多顶点颜色
         //new ViewFragmentColor(GL,this.container);//片元着色器相对屏幕位置调整颜色
-        new TextureQuad(GL,this.container);//纹理
+        //new TextureQuad(GL,this.container);//纹理
+        new TextureMask(GL,this.container);//纹理遮罩-相乘
     }
 
 
