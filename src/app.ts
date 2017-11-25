@@ -8,6 +8,11 @@ import Matrix from "./com/chapter3/Matrix";
 import RotatedMatrix4 from "./com/chapter4/RotatedMatrix4";
 import RotatedTranslated from "./com/chapter4/RotatedTranslated";
 import {DrawGLContainerBase} from "./com/ILearnDraw";
+import MultiAttributeSize from "./com/chapter5/MultiAttributeSize";
+import MultiAttriSizeInterleaved from "./com/chapter5/MultiAttriSizeInterleaved";
+import MultiAttributeColor from "./com/chapter5/MultiAttributeColor";
+import ViewFragmentColor from "./com/chapter5/ViewFragmentColor";
+import TextureQuad from "./com/chapter5/TextureQuad";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -35,7 +40,14 @@ class Demo{
 
         //章节4
         //new RotatedMatrix4(GL,this.container);//Matrix4 操作
-        this.curDrawBase=new RotatedTranslated(GL,this.container);//Matrix4 操作 平移旋转
+        //this.curDrawBase=new RotatedTranslated(GL,this.container);//Matrix4 操作 平移旋转
+
+        //章节5
+        //new MultiAttributeSize(GL,this.container);//多个缓冲
+        //new MultiAttriSizeInterleaved(GL,this.container);//数组多项顶点数据
+        //new MultiAttributeColor(GL,this.container);//多顶点颜色
+        //new ViewFragmentColor(GL,this.container);//片元着色器相对屏幕位置调整颜色
+        new TextureQuad(GL,this.container);//纹理
     }
 
 
