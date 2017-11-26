@@ -23,6 +23,7 @@ class Demo{
 
     constructor(){
         console.log("Hello typescript webpack ori WebGL!!!!");
+        //develop from liaohengfan home pc
         this.init();
     }
 
