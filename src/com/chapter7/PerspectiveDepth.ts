@@ -2,7 +2,8 @@ import {DrawGLContainerBase} from "../ILearnDraw";
 import {msg} from "../tools/LHFTools";
 import {Matrix4} from "../base/Matrix";
 
-class ModelViewPersMatrix extends DrawGLContainerBase{
+/** * 深度 */
+class PerspectiveDepth extends DrawGLContainerBase{
     //状态
     enabled:boolean=false;
 
@@ -25,7 +26,7 @@ class ModelViewPersMatrix extends DrawGLContainerBase{
     pointLength:number=0;
     constructor(gl:any,container:HTMLElement){
         super(gl,container);
-        this.getGLSL('./assets/glsls/chapter7/','ModelViewPersMatrix');
+        this.getGLSL('./assets/glsls/chapter7/','PerspectiveDepth');
     }
 
     initVertexBuffer(vertSizes:Array<number>,step:number=3):number{
@@ -65,18 +66,17 @@ class ModelViewPersMatrix extends DrawGLContainerBase{
             [//三角形
                 //右侧三角形
                 //顶点            //颜色
-                0.0,  1.0, -4.0,  0.4,1.0,0.4,//绿色
-                -0.5, -1.0, -4.0,  0.4,1.0,0.4,
-                0.5, -1.0, -4.0,  1.0,0.4,0.4,
+                0.0,  1.0,  0.0,  0.4,0.4,1.0,//蓝色
+                -0.5, -1.0,  0.0,  0.4,0.4,1.0,
+                0.5, -1.0,  0.0,  1.0,0.4,0.4,
 
                 0.0,  1.0, -2.0,  1.0,1.0,0.4,//黄色
                 -0.5, -1.0, -2.0,  1.0,1.0,0.4,
                 0.5, -1.0, -2.0,  1.0,0.4,0.4,
 
-                0.0,  1.0,  0.0,  0.4,0.4,1.0,//蓝色
-                -0.5, -1.0,  0.0,  0.4,0.4,1.0,
-                0.5, -1.0,  0.0,  1.0,0.4,0.4,
-
+                0.0,  1.0, -4.0,  0.4,1.0,0.4,//绿色
+                -0.5, -1.0, -4.0,  0.4,1.0,0.4,
+                0.5, -1.0, -4.0,  1.0,0.4,0.4,
             ],
             6
         );
@@ -102,6 +102,9 @@ class ModelViewPersMatrix extends DrawGLContainerBase{
 
         //设置顶点大小 颜色 并清空canvas
         GL.uniformMatrix4fv(this.u_MVPMatrix,false,this.mvpMatrix.elements);
+
+        //开启深度测试
+        GL.enable(GL.DEPTH_TEST);
 
         //添加键盘监听
         this.createHandler();
@@ -139,7 +142,7 @@ class ModelViewPersMatrix extends DrawGLContainerBase{
         const GL:WebGLRenderingContext=this.gl;
 
         GL.clearColor(0.0,0.0,0.0,1.0);
-        GL.clear(GL.COLOR_BUFFER_BIT);
+        GL.clear(GL.COLOR_BUFFER_BIT|GL.DEPTH_BUFFER_BIT);//清除颜色缓冲区 清除深度缓冲区
 
         //绘制右侧
         this.modelMatrix.setTranslate(0.75,0,0);
@@ -162,4 +165,4 @@ class ModelViewPersMatrix extends DrawGLContainerBase{
     }
 
 }
-export default ModelViewPersMatrix;
+export default PerspectiveDepth;

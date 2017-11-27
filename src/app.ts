@@ -23,6 +23,10 @@ import LookAtTriangleWithKeysView from "./com/chapter7/LookAtTriangleWithKeysVie
 import PerspectiveView from "./com/chapter7/PerspectiveView";
 import PerspectiveViewMVP from "./com/chapter7/PerspectiveViewMVP";
 import ModelViewPersMatrix from "./com/chapter7/ModelViewPersMatrix";
+import PerspectiveDepth from "./com/chapter7/PerspectiveDepth";
+import ZFighting from "./com/chapter7/ZFighting";
+import HelloCube from "./com/chapter7/HelloCube";
+import ColoredCube from "./com/chapter7/ColoredCube";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -70,7 +74,11 @@ class Demo{
         //new LookAtTriangleWithKeysView(GL,this.container);// 正交可视空间  模型矩阵
         //new PerspectiveView(GL,this.container);// 透视可视空间
         //new PerspectiveViewMVP(GL,this.container);// 透视可视空间-顶点偏移
-        new ModelViewPersMatrix(GL,this.container);// 模型视图 投影矩阵
+        //new ModelViewPersMatrix(GL,this.container);// 模型视图 投影矩阵
+        //new PerspectiveDepth(GL,this.container);// 模型视图  深度测试
+        //new ZFighting(GL,this.container);// 模型视图  深度冲突
+        //new HelloCube(GL,this.container);// Hello Cube  初试 立方体
+        new ColoredCube(GL,this.container);// Cube  各面颜色不同立方体
 
     }
 
