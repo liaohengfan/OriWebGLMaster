@@ -146,9 +146,6 @@ class PerspectiveView extends DrawGLContainerBase{
         GL.clearColor(0.0,0.0,0.0,1.0);
         GL.clear(GL.COLOR_BUFFER_BIT);
 
-        //点
-        //GL.drawArrays(GL.POINTS,0,l);
-
         //面
         GL.drawArrays(GL.TRIANGLES,0,this.pointLength);//三角形
     }
