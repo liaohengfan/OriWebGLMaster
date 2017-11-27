@@ -21,6 +21,8 @@ import LookAtTriangleWithKeys from "./com/chapter7/LookAtTriangleWithKeys";
 import OrthoVisualSpace from "./com/chapter7/OrthoVisualSpace";
 import LookAtTriangleWithKeysView from "./com/chapter7/LookAtTriangleWithKeysView";
 import PerspectiveView from "./com/chapter7/PerspectiveView";
+import PerspectiveViewMVP from "./com/chapter7/PerspectiveViewMVP";
+import ModelViewPersMatrix from "./com/chapter7/ModelViewPersMatrix";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -66,7 +68,9 @@ class Demo{
         //new LookAtTriangleWithKeys(GL,this.container);// 键盘控制视点
         //new OrthoVisualSpace(GL,this.container);// 正交可视空间
         //new LookAtTriangleWithKeysView(GL,this.container);// 正交可视空间  模型矩阵
-        new PerspectiveView(GL,this.container);// 透视可视空间
+        //new PerspectiveView(GL,this.container);// 透视可视空间
+        //new PerspectiveViewMVP(GL,this.container);// 透视可视空间-顶点偏移
+        new ModelViewPersMatrix(GL,this.container);// 模型视图 投影矩阵
 
     }
 
