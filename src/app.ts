@@ -27,6 +27,7 @@ import PerspectiveDepth from "./com/chapter7/PerspectiveDepth";
 import ZFighting from "./com/chapter7/ZFighting";
 import HelloCube from "./com/chapter7/HelloCube";
 import ColoredCube from "./com/chapter7/ColoredCube";
+import LightedCube from "./com/chapter8/LightedCube";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -78,7 +79,8 @@ class Demo{
         //new PerspectiveDepth(GL,this.container);// 模型视图  深度测试
         //new ZFighting(GL,this.container);// 模型视图  深度冲突
         //new HelloCube(GL,this.container);// Hello Cube  初试 立方体
-        new ColoredCube(GL,this.container);// Cube  各面颜色不同立方体
+        //new ColoredCube(GL,this.container);// Cube  各面颜色不同立方体
+        new LightedCube(GL,this.container);// Cube  光照
 
     }
 
