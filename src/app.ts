@@ -14,6 +14,13 @@ import MultiAttributeColor from "./com/chapter5/MultiAttributeColor";
 import ViewFragmentColor from "./com/chapter5/ViewFragmentColor";
 import TextureQuad from "./com/chapter5/TextureQuad";
 import TextureMask from "./com/chapter5/TextureMask";
+import LookAtTriangles from "./com/chapter7/LookAtTriangles";
+import LookAtRotatedTriangles from "./com/chapter7/LookAtRotatedTriangles";
+import LookAtRotateTriangleMVMatrix from "./com/chapter7/LookAtRotateTriangleMVMatrix";
+import LookAtTriangleWithKeys from "./com/chapter7/LookAtTriangleWithKeys";
+import OrthoVisualSpace from "./com/chapter7/OrthoVisualSpace";
+import LookAtTriangleWithKeysView from "./com/chapter7/LookAtTriangleWithKeysView";
+import PerspectiveView from "./com/chapter7/PerspectiveView";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -50,7 +57,17 @@ class Demo{
         //new MultiAttributeColor(GL,this.container);//多顶点颜色
         //new ViewFragmentColor(GL,this.container);//片元着色器相对屏幕位置调整颜色
         //new TextureQuad(GL,this.container);//纹理
-        new TextureMask(GL,this.container);//纹理遮罩-相乘
+        //new TextureMask(GL,this.container);//纹理遮罩-相乘
+
+        //章节7
+        //new LookAtTriangles(GL,this.container);// 视角观看三角形
+        //new LookAtRotatedTriangles(GL,this.container);// 视角观看旋转三角形
+        //new LookAtRotateTriangleMVMatrix(GL,this.container);// 模型视图矩阵 外部计算
+        //new LookAtTriangleWithKeys(GL,this.container);// 键盘控制视点
+        //new OrthoVisualSpace(GL,this.container);// 正交可视空间
+        //new LookAtTriangleWithKeysView(GL,this.container);// 正交可视空间  模型矩阵
+        new PerspectiveView(GL,this.container);// 透视可视空间
+
     }
 
 
