@@ -35,7 +35,7 @@ class DrawGLContainerBase implements ILearnDraw{
      * @param {string} vshader
      * @param {string} fshader
      */
-    private initShader(vshader:string,fshader:string):void{
+    protected initShader(vshader:string,fshader:string):void{
         if (!initShaders(this.gl, vshader, fshader)) {
             msg('Filed to init shaders!');
             return;

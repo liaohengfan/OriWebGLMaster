@@ -32,6 +32,8 @@ import LightedCubeAmbient from "./com/chapter8/LightedCubeAmbient";
 import LightedTranlatedRotateCube from "./com/chapter8/LightedTranlatedRotateCube";
 import PointLightedCube from "./com/chapter8/PointLightedCube";
 import PointLightedCubeAni from "./com/chapter8/PointLightCubeAni";
+import PointLightedCubeFragment from "./com/chapter8/PointLightCubeFragment";
+import InitShaderDetails from "./com/chapter9/InitShaderDetails";
 class Demo{
     container:HTMLElement;
     canvas:HTMLCanvasElement;
@@ -84,11 +86,18 @@ class Demo{
         //new ZFighting(GL,this.container);// 模型视图  深度冲突
         //new HelloCube(GL,this.container);// Hello Cube  初试 立方体
         //new ColoredCube(GL,this.container);// Cube  各面颜色不同立方体
+
+        //章节8
         //new LightedCube(GL,this.container);// Cube  光照
         //new LightedCubeAmbient(GL,this.container);// Cube  光照-环境光
         //new LightedTranlatedRotateCube(GL,this.container);// Cube  光照-环境光-旋转 偏移 盒子 计算光照
         //new PointLightedCube(GL,this.container);// Cube  光照-环境光-点光源
-        this.curDrawBase=new PointLightedCubeAni(GL,this.container);// Cube  光照-环境光-点光源-旋转
+        //this.curDrawBase=new PointLightedCubeAni(GL,this.container);// Cube  光照-环境光-点光源-旋转
+        //this.curDrawBase=new PointLightedCubeFragment(GL,this.container);// Cube  光照-环境光-点光源-旋转 -逐片元渲染光效
+
+        //章节9
+        this.curDrawBase=new InitShaderDetails(GL,this.container);//着色器初始化细节
+
 
     }
 
