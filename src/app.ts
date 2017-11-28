@@ -34,21 +34,22 @@ import PointLightedCube from "./com/chapter8/PointLightedCube";
 import PointLightedCubeAni from "./com/chapter8/PointLightCubeAni";
 import PointLightedCubeFragment from "./com/chapter8/PointLightCubeFragment";
 import InitShaderDetails from "./com/chapter9/InitShaderDetails";
-class Demo{
-    container:HTMLElement;
-    canvas:HTMLCanvasElement;
-    gl:WebGLRenderingContext=null;
 
-    curDrawBase:DrawGLContainerBase=null;
+class Demo {
+    container: HTMLElement;
+    canvas: HTMLCanvasElement;
+    gl: WebGLRenderingContext = null;
 
-    constructor(){
+    curDrawBase: DrawGLContainerBase = null;
+
+    constructor() {
         console.log("Hello typescript webpack ori WebGL!!!!");
         //develop from liaohengfan home pc
         this.init();
     }
 
-    eidtorWebGL(){
-        const GL:WebGLRenderingContext=this.gl;
+    eidtorWebGL() {
+        const GL: WebGLRenderingContext = this.gl;
 
         //章节2
         //new DrawAPoint(GL,this.container); //绘制一个点
@@ -96,28 +97,27 @@ class Demo{
         //this.curDrawBase=new PointLightedCubeFragment(GL,this.container);// Cube  光照-环境光-点光源-旋转 -逐片元渲染光效
 
         //章节9
-        this.curDrawBase=new InitShaderDetails(GL,this.container);//着色器初始化细节
-
+        this.curDrawBase = new InitShaderDetails(GL, this.container);//着色器初始化细节
 
     }
 
 
-    init(){
-        const THAT:Demo = this;
-        let container_:any=d3.select("#webgl_div");
+    init() {
+        const THAT: Demo = this;
+        let container_: any = d3.select("#webgl_div");
         this.container = container_.node() as HTMLElement;
-        let canvas_:any=container_.append('canvas');
-        this.canvas=canvas_.node();
+        let canvas_: any = container_.append('canvas');
+        this.canvas = canvas_.node();
 
         /**         * 添加窗口大小更改事件         */
-        window.addEventListener("resize",()=>{
+        window.addEventListener("resize", () => {
             this.windowResize();
         });
         this.windowResize();
 
         //
-        let gl:WebGLRenderingContext =this.gl= getWebGLContext(this.canvas);
-        if(!gl){
+        let gl: WebGLRenderingContext = this.gl = getWebGLContext(this.canvas);
+        if (!gl) {
             console.log('Failed get rendering context for WebGL!');
             return;
         }
@@ -125,29 +125,31 @@ class Demo{
         this.eidtorWebGL();
 
         /**     * 动画     */
-        function enterframe(){
+        function enterframe() {
             THAT.update();
             requestAnimationFrame(enterframe);
         }
+
         enterframe();
     }
 
     /**     * 更新     */
-    update():void{
-        if(this.curDrawBase){
+    update(): void {
+        if (this.curDrawBase) {
             this.curDrawBase.update();
         }
     }
 
     /**     * 窗口大小变化     */
-    private windowResize(){
-        var width_:number=this.container.clientWidth;
-        var height_:number=this.container.clientHeight;
-        this.canvas.width=width_;
-        this.canvas.height=height_;
+    private windowResize() {
+        var width_: number = this.container.clientWidth;
+        var height_: number = this.container.clientHeight;
+        this.canvas.width = width_;
+        this.canvas.height = height_;
     }
 
 }
-window.onload=function(){
+
+window.onload = function () {
     new Demo();
 };
