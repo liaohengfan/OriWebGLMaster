@@ -1,13 +1,13 @@
+import './common.css';
 import * as d3 from 'd3';
 import {getWebGLContext} from './com/base/Utils';
-import './common.css';
+import {DrawGLContainerBase} from "./com/ILearnDraw";
 import VertexBuffer from "./com/chapter3/VertexBuffer";
 import Translated from "./com/chapter3/Translated";
 import Rotated from "./com/chapter3/Rotated";
 import Matrix from "./com/chapter3/Matrix";
 import RotatedMatrix4 from "./com/chapter4/RotatedMatrix4";
 import RotatedTranslated from "./com/chapter4/RotatedTranslated";
-import {DrawGLContainerBase} from "./com/ILearnDraw";
 import MultiAttributeSize from "./com/chapter5/MultiAttributeSize";
 import MultiAttriSizeInterleaved from "./com/chapter5/MultiAttriSizeInterleaved";
 import MultiAttributeColor from "./com/chapter5/MultiAttributeColor";
