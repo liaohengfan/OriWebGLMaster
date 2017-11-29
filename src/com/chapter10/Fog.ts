@@ -88,7 +88,7 @@ class Fog extends DrawGLContainerBase{
 
         //绑定缓冲区
         this.initArrayBuffer(vertices,3,GL.FLOAT,'a_Position');
-        this.initArrayBuffer(normals,3,GL.FLOAT,'a_Normal');
+        //this.initArrayBuffer(normals,3,GL.FLOAT,'a_Normal');
         this.initArrayBuffer(colors,3,GL.FLOAT,'a_Color');
 
         //顶点及颜色索引
