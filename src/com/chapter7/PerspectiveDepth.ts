@@ -26,7 +26,7 @@ class PerspectiveDepth extends DrawGLContainerBase{
     pointLength:number=0;
     constructor(gl:any,container:HTMLElement){
         super(gl,container);
-        this.getGLSL('./assets/glsls/chapter7/','BlendedCube');
+        this.getGLSL('./assets/glsls/chapter7/','PerspectiveDepth');
     }
 
     initVertexBuffer(vertSizes:Array<number>,step:number=3):number{

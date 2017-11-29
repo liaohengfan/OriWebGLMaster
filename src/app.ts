@@ -108,8 +108,8 @@ class Demo {
         //this.curDrawBase= new Fog(GL,this.container);//雾化  大气效果
         //new DrawRoundPoint(GL,this.container);//圆形的点
         //new LookAtBlendedTriangles(GL,this.container);//颜色混合
-        //this.curDrawBase=new BlendedCube(GL,this.container);//颜色混合 Cube
-        this.curDrawBase=new ProgramObject(GL,this.container);//多个着色器 Cube
+        this.curDrawBase=new BlendedCube(GL,this.container);//颜色混合 Cube
+        //this.curDrawBase=new ProgramObject(GL,this.container);//多个着色器 Cube
 
     }
 
