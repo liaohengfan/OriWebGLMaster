@@ -8,8 +8,10 @@ interface ILearnDraw{
     container:HTMLElement;
     init():boolean;
     update():boolean;
+    resize():boolean;
 }
 class DrawGLContainerBase implements ILearnDraw{
+
     gl: any;
     glProgram:WebGLProgram;
     container: HTMLElement;
@@ -45,6 +47,9 @@ class DrawGLContainerBase implements ILearnDraw{
     }
 
     init(): boolean {
+        throw new Error("Method not implemented.");
+    }
+    resize(): boolean {
         throw new Error("Method not implemented.");
     }
 

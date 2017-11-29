@@ -34,6 +34,7 @@ import PointLightedCube from "./com/chapter8/PointLightedCube";
 import PointLightedCubeAni from "./com/chapter8/PointLightCubeAni";
 import PointLightedCubeFragment from "./com/chapter8/PointLightCubeFragment";
 import InitShaderDetails from "./com/chapter9/InitShaderDetails";
+import Fog from "./com/chapter10/Fog";
 
 class Demo {
     container: HTMLElement;
@@ -97,7 +98,10 @@ class Demo {
         //this.curDrawBase=new PointLightedCubeFragment(GL,this.container);// Cube  光照-环境光-点光源-旋转 -逐片元渲染光效
 
         //章节9
-        this.curDrawBase = new InitShaderDetails(GL, this.container);//着色器初始化细节
+        //this.curDrawBase = new InitShaderDetails(GL, this.container);//着色器初始化细节
+
+        //章节10
+        this.curDrawBase= new Fog(GL,this.container);//雾化  大气效果
 
     }
 
@@ -142,10 +146,13 @@ class Demo {
 
     /**     * 窗口大小变化     */
     private windowResize() {
-        var width_: number = this.container.clientWidth;
-        var height_: number = this.container.clientHeight;
+        let width_: number = this.container.clientWidth;
+        let height_: number = this.container.clientHeight;
         this.canvas.width = width_;
         this.canvas.height = height_;
+        if(this.curDrawBase){
+            this.curDrawBase.resize();
+        }
     }
 
 }
