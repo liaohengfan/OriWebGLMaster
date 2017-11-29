@@ -10,5 +10,6 @@ void main() {
     v_Color = a_Color;
 
     //点与视点之间距离
-    v_Dist = distance(u_ModelMatrix * a_Position, u_Eye);
+    //v_Dist = distance(u_ModelMatrix * a_Position, u_Eye);
+    v_Dist = gl_Position.w;
 }

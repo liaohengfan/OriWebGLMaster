@@ -35,6 +35,7 @@ import PointLightedCubeAni from "./com/chapter8/PointLightCubeAni";
 import PointLightedCubeFragment from "./com/chapter8/PointLightCubeFragment";
 import InitShaderDetails from "./com/chapter9/InitShaderDetails";
 import Fog from "./com/chapter10/Fog";
+import DrawRoundPoint from "./com/chapter10/DrawRoundPoint";
 
 class Demo {
     container: HTMLElement;
@@ -101,7 +102,8 @@ class Demo {
         //this.curDrawBase = new InitShaderDetails(GL, this.container);//着色器初始化细节
 
         //章节10
-        this.curDrawBase= new Fog(GL,this.container);//雾化  大气效果
+        //this.curDrawBase= new Fog(GL,this.container);//雾化  大气效果
+        new DrawRoundPoint(GL,this.container);//圆形的点
 
     }
 
