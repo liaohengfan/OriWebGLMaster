@@ -2,31 +2,31 @@ import {DrawGLContainerBase} from "../ILearnDraw";
 import {msg} from "../tools/LHFTools";
 import {Matrix4} from "../base/Matrix";
 
-/** * 深度 */
-class PerspectiveDepth extends DrawGLContainerBase{
+/** * 颜色混合 */
+class LookAtBlendedTriangles extends DrawGLContainerBase{
     //状态
     enabled:boolean=false;
 
     //GLSL属性
     a_Position:number;
     a_Color:number;
-    u_MVPMatrix:WebGLUniformLocation;
+    u_ViewMatrix:WebGLUniformLocation;
+    u_ProjMatrix:WebGLUniformLocation;
 
     //视图矩阵
-    modelMatrix:Matrix4;//模型
-    viewMatrix:Matrix4;//视图
-    projMatrix:Matrix4;//投影
-    mvpMatrix:Matrix4;//模型视图投影矩阵
+    lookViewMatrix:Matrix4;
+    modelMatrix:Matrix4;
+    projMatrix:Matrix4;
 
     //视点位置
     g_eyeX:number=0.0;
-    g_eyeY:number=0.0;
-    g_eyeZ:number=5;
+    g_eyeY:number=0.1;
+    g_eyeZ:number=0.25;
 
     pointLength:number=0;
     constructor(gl:any,container:HTMLElement){
         super(gl,container);
-        this.getGLSL('./assets/glsls/chapter7/','BlendedCube');
+        this.getGLSL('./assets/glsls/chapter10/','LookAtBlendedTriangles');
     }
 
     initVertexBuffer(vertSizes:Array<number>,step:number=3):number{
@@ -48,7 +48,7 @@ class PerspectiveDepth extends DrawGLContainerBase{
         gl.enableVertexAttribArray(this.a_Position);
 
         //顶点颜色缓冲
-        gl.vertexAttribPointer(this.a_Color,3,gl.FLOAT,false,FSIZE*step,FSIZE*3);
+        gl.vertexAttribPointer(this.a_Color,4,gl.FLOAT,false,FSIZE*step,FSIZE*3);
         gl.enableVertexAttribArray(this.a_Color);
 
         return l;
@@ -59,26 +59,25 @@ class PerspectiveDepth extends DrawGLContainerBase{
         //获取顶点设置位置
         this.a_Position=GL.getAttribLocation(this.glProgram,'a_Position');
         this.a_Color=GL.getAttribLocation(this.glProgram,'a_Color');
-        this.u_MVPMatrix=GL.getUniformLocation(this.glProgram,'u_MVPMatrix');
+        this.u_ViewMatrix=GL.getUniformLocation(this.glProgram,'u_ViewMatrix');
+        this.u_ProjMatrix=GL.getUniformLocation(this.glProgram,'u_ProjMatrix');
 
         //初始化顶点缓冲数据
         let l:number=this.initVertexBuffer(
             [//三角形
-                //右侧三角形
-                //顶点            //颜色
-                0.0,  1.0,  0.0,  0.4,0.4,1.0,//蓝色
-                -0.5, -1.0,  0.0,  0.4,0.4,1.0,
-                0.5, -1.0,  0.0,  1.0,0.4,0.4,
+                0.0,  0.5,  -0.4,  0.4,  1.0,  0.4,  0.4, // The back green one
+                -0.5, -0.5,  -0.4,  0.4,  1.0,  0.4,  0.4,
+                0.5, -0.5,  -0.4,  1.0,  0.4,  0.4,  0.4,
 
-                0.0,  1.0, -2.0,  1.0,1.0,0.4,//黄色
-                -0.5, -1.0, -2.0,  1.0,1.0,0.4,
-                0.5, -1.0, -2.0,  1.0,0.4,0.4,
+                0.5,  0.4,  -0.2,  1.0,  0.4,  0.4,  0.4, // The middle yerrow one
+                -0.5,  0.4,  -0.2,  1.0,  1.0,  0.4,  0.4,
+                0.0, -0.6,  -0.2,  1.0,  1.0,  0.4,  0.4,
 
-                0.0,  1.0, -4.0,  0.4,1.0,0.4,//绿色
-                -0.5, -1.0, -4.0,  0.4,1.0,0.4,
-                0.5, -1.0, -4.0,  1.0,0.4,0.4,
+                0.0,  0.5,   0.0,  0.4,  0.4,  1.0,  0.4,  // The front blue one
+                -0.5, -0.5,   0.0,  0.4,  0.4,  1.0,  0.4,
+                0.5, -0.5,   0.0,  1.0,  0.4,  0.4,  0.4,
             ],
-            6
+            7
         );
         this.pointLength=l;
         if(l<=0){
@@ -86,28 +85,32 @@ class PerspectiveDepth extends DrawGLContainerBase{
         }
 
         //视图矩阵
-        this.viewMatrix=new Matrix4();
-        this.viewMatrix.setLookAt(this.g_eyeX,this.g_eyeY,this.g_eyeZ,0,0,0,0,1,0);//
+        this.lookViewMatrix=new Matrix4();
+        this.lookViewMatrix.setLookAt(this.g_eyeX,this.g_eyeY,this.g_eyeZ,0,0,0,0,1,0);//
 
         //模型矩阵
         this.modelMatrix=new Matrix4();
+        this.modelMatrix.setRotate(0,0,0,1);//模型矩阵旋转 绕Z轴旋转-10度
 
-        //可视空间-透视投影
+        //可视空间
         this.projMatrix=new Matrix4();
-        this.projMatrix.setPerspective(30,this.container.clientWidth/this.container.clientHeight,1,100);
+        this.projMatrix.setOrtho(-1,1,-1,1,0,2);
 
-        //模型视图投影矩阵
-        this.mvpMatrix=new Matrix4();
-        this.mvpMatrix.set(this.projMatrix).multiply(this.viewMatrix).multiply(this.modelMatrix);
+        //视图模型矩阵
+        let modelViewMatrix:Matrix4=this.lookViewMatrix.multiply(this.modelMatrix);
 
         //设置顶点大小 颜色 并清空canvas
-        GL.uniformMatrix4fv(this.u_MVPMatrix,false,this.mvpMatrix.elements);
-
-        //开启深度测试
-        GL.enable(GL.DEPTH_TEST);
+        GL.uniformMatrix4fv(this.u_ViewMatrix,false,modelViewMatrix.elements);
+        GL.uniformMatrix4fv(this.u_ProjMatrix,false,this.projMatrix.elements);
 
         //添加键盘监听
         this.createHandler();
+
+        //开启混合
+        GL.enable(GL.BLEND);
+
+        //设置混合函数
+        GL.blendFunc(GL.SRC_ALPHA,GL.ONE_MINUS_SRC_ALPHA);
 
         this.draw();
         this.enabled=true;
@@ -131,9 +134,9 @@ class PerspectiveDepth extends DrawGLContainerBase{
     /**    * 更新视图模型矩阵     */
     updateViewModelMatrix():void{
         msg('updateViewModelMatrix');
-        this.viewMatrix.setLookAt(this.g_eyeX,this.g_eyeY,this.g_eyeZ,0,0,0,0,1,0);//
-        this.mvpMatrix.set(this.projMatrix).multiply(this.viewMatrix).multiply(this.modelMatrix);
-        this.gl.uniformMatrix4fv(this.u_MVPMatrix,false,this.mvpMatrix.elements);
+        this.lookViewMatrix.setLookAt(this.g_eyeX,this.g_eyeY,this.g_eyeZ,0,0,0,0,1,0);//
+        let modelViewMatrix:Matrix4=this.lookViewMatrix.multiply(this.modelMatrix);
+        this.gl.uniformMatrix4fv(this.u_ViewMatrix,false,modelViewMatrix.elements);
         this.draw();
     }
 
@@ -142,21 +145,13 @@ class PerspectiveDepth extends DrawGLContainerBase{
         const GL:WebGLRenderingContext=this.gl;
 
         GL.clearColor(0.0,0.0,0.0,1.0);
-        GL.clear(GL.COLOR_BUFFER_BIT|GL.DEPTH_BUFFER_BIT);//清除颜色缓冲区 清除深度缓冲区
+        GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
 
-        //绘制右侧
-        this.modelMatrix.setTranslate(0.75,0,0);
-        this.mvpMatrix.set(this.projMatrix).multiply(this.viewMatrix).multiply(this.modelMatrix);
-        GL.uniformMatrix4fv(this.u_MVPMatrix,false,this.mvpMatrix.elements);
-        GL.drawArrays(GL.TRIANGLES,0,this.pointLength);//三角形
+        //点
+        //GL.drawArrays(GL.POINTS,0,l);
 
-        //绘制左侧
-        this.modelMatrix.setTranslate(-0.75,0,0);
-        this.mvpMatrix.set(this.projMatrix).multiply(this.viewMatrix).multiply(this.modelMatrix);
-        GL.uniformMatrix4fv(this.u_MVPMatrix,false,this.mvpMatrix.elements);
+        //面
         GL.drawArrays(GL.TRIANGLES,0,this.pointLength);//三角形
-        //GL.drawArrays(GL.LINE_STRIP,0,this.pointLength);//三角形
-        //GL.drawArrays(GL.LINE_LOOP,0,this.pointLength);//三角形
     }
 
     update(): boolean {
@@ -165,4 +160,4 @@ class PerspectiveDepth extends DrawGLContainerBase{
     }
 
 }
-export default PerspectiveDepth;
+export default LookAtBlendedTriangles;

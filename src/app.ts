@@ -36,6 +36,9 @@ import PointLightedCubeFragment from "./com/chapter8/PointLightCubeFragment";
 import InitShaderDetails from "./com/chapter9/InitShaderDetails";
 import Fog from "./com/chapter10/Fog";
 import DrawRoundPoint from "./com/chapter10/DrawRoundPoint";
+import LookAtBlendedTriangles from "./com/chapter10/LookAtBlendedTriangles";
+import BlendedCube from "./com/chapter10/BlendedCube";
+import ProgramObject from "./com/chapter10/ProgramObject";
 
 class Demo {
     container: HTMLElement;
@@ -103,7 +106,10 @@ class Demo {
 
         //章节10
         //this.curDrawBase= new Fog(GL,this.container);//雾化  大气效果
-        new DrawRoundPoint(GL,this.container);//圆形的点
+        //new DrawRoundPoint(GL,this.container);//圆形的点
+        //new LookAtBlendedTriangles(GL,this.container);//颜色混合
+        //this.curDrawBase=new BlendedCube(GL,this.container);//颜色混合 Cube
+        this.curDrawBase=new ProgramObject(GL,this.container);//多个着色器 Cube
 
     }
 

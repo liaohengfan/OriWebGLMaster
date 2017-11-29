@@ -28,7 +28,7 @@ class DrawGLContainerBase implements ILearnDraw{
      */
     getGLSL(url:string,name:string){
         GLSLTools.getGLSL(url,name,(vshader:string,fshader:string)=> {
-            this.initShader(vshader,fshader);
+            this.initShader(vshader,fshader,name);
         });
     }
 
@@ -37,7 +37,7 @@ class DrawGLContainerBase implements ILearnDraw{
      * @param {string} vshader
      * @param {string} fshader
      */
-    protected initShader(vshader:string,fshader:string):void{
+    protected initShader(vshader:string,fshader:string,name?:string):void{
         if (!initShaders(this.gl, vshader, fshader)) {
             msg('Filed to init shaders!');
             return;
