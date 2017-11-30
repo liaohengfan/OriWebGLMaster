@@ -39,6 +39,7 @@ import DrawRoundPoint from "./com/chapter10/DrawRoundPoint";
 import LookAtBlendedTriangles from "./com/chapter10/LookAtBlendedTriangles";
 import BlendedCube from "./com/chapter10/BlendedCube";
 import ProgramObject from "./com/chapter10/ProgramObject";
+import FrameBuffer from "./com/chapter10/FrameBuffer";
 
 class Demo {
     container: HTMLElement;
@@ -109,7 +110,8 @@ class Demo {
         //new DrawRoundPoint(GL,this.container);//圆形的点
         //new LookAtBlendedTriangles(GL,this.container);//颜色混合
         //this.curDrawBase=new BlendedCube(GL,this.container);//颜色混合 Cube
-        this.curDrawBase=new ProgramObject(GL,this.container);//多个着色器 Cube
+        //this.curDrawBase=new ProgramObject(GL,this.container);//多个着色器 Cube
+        this.curDrawBase=new FrameBuffer(GL,this.container);//帧缓冲区
 
     }
 

@@ -2,11 +2,11 @@ import {DrawGLContainerBase} from "../ILearnDraw";
 import {msg} from "../tools/LHFTools";
 import {Matrix4} from "../base/Matrix";
 import TextureQuad from "../chapter5/TextureQuad";
-import {Cube} from "../oriwebgl/Cube";
 import {DefWebGLBuffer} from "../oriwebgl/Core";
+import {Cube} from "../oriwebgl/Cube";
 
 /** * 多个着色器 */
-class ProgramObject extends DrawGLContainerBase {
+class FrameBuffer extends DrawGLContainerBase {
     //状态
     enabled: boolean = false;
 
@@ -51,11 +51,10 @@ class ProgramObject extends DrawGLContainerBase {
 
     constructor(gl: any, container: HTMLElement) {
         super(gl, container);
-        this.getGLSL('./assets/glsls/chapter10/', 'Solid');
-        this.getGLSL('./assets/glsls/chapter10/', 'Texture');
+        this.getGLSL('./assets/glsls/chapter10/', 'FrameBuffer');
     }
 
-    initShader(vshader: string, fshader: string, name: string) {
+    initShader(vshader: string, fshader: string) {
         const GL: WebGLRenderingContext = this.gl;
         let program:WebGLProgram=GL.createProgram();
         let verShader: WebGLShader = GL.createShader(GL.VERTEX_SHADER);
@@ -83,7 +82,7 @@ class ProgramObject extends DrawGLContainerBase {
 
     /**     * 加载纹理     */
     loadTextures(){
-        let that:ProgramObject=this;
+        let that:FrameBuffer=this;
         let image:HTMLImageElement=this.image=new Image();
         image.onload=function(){
             that.initTexture();
@@ -222,4 +221,4 @@ class ProgramObject extends DrawGLContainerBase {
     }
 
 }
-export default ProgramObject;
+export default FrameBuffer;
