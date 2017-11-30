@@ -1,10 +1,10 @@
 attribute vec4 a_Position;
 attribute vec4 a_Normal;
 attribute vec2 a_TexCoord;
-uniform mat4 u_MvpMatrix;
-uniform mat4 u_NormalMatrix;
 varying float v_NdotL;
 varying vec2 v_TexCoord;
+uniform mat4 u_MvpMatrix;
+uniform mat4 u_NormalMatrix;
 void main() {
     vec3 lightDirection = vec3(0.0, 0.0, 1.0); // Light direction(World coordinate)
     gl_Position = u_MvpMatrix * a_Position;
