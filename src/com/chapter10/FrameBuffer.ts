@@ -25,6 +25,7 @@ class FrameBuffer extends DrawGLContainerBase {
     program: WebGLProgram;
     u_MvpMatrix:WebGLUniformLocation;
     a_Position:number;
+    a_TexCoord:number;
 
     //立方体对象
     cube:Cube;
@@ -97,8 +98,10 @@ class FrameBuffer extends DrawGLContainerBase {
         //获取对象
         this.u_MvpMatrix=GL.getUniformLocation(this.program,'u_MvpMatrix');
         this.a_Position=GL.getAttribLocation(this.program,'a_Position');
+        this.a_TexCoord=GL.getAttribLocation(this.program,'a_TexCoord');
 
         this.initAttributeVariable(GL,this.a_Position,this.cube.vertexBuffer);
+        this.initAttributeVariable(GL,this.a_TexCoord,this.cube.texCoordBuffer);
 
         //使用的着色器程序
         GL.useProgram(this.program);
