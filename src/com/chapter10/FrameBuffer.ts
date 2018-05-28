@@ -133,22 +133,26 @@ class FrameBuffer extends DrawGLContainerBase {
 
     /**     * 绘制     */
     draw(): void {
+        this.drawCube(this.u_MvpMatrix,this.cube,0,this.curAngle,this.mvpMatrix);
+    }
+
+    /**     * 绘制盒子     */
+    drawCube(u_MvpMatrix:WebGLUniformLocation, cube:Cube, x:number, angle:number, viewProjMatrix:Matrix4) {
         const GL: WebGLRenderingContext = this.gl;
-        //GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
-        //GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
-        //GL.clearColor(0.0, 0.0, 0.0, 1.0);
+        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.cube.indexBuffer);  // Bind indices
 
         // Calculate a model matrix
-        this.modelMatrix.setTranslate(0, 0.0, 0.0);
+        this.modelMatrix.setTranslate(x, 0.0, 0.0);
         this.modelMatrix.rotate(20.0, 1.0, 0.0, 0.0);
-        this.modelMatrix.rotate(this.curAngle, 0.0, 1.0, 0.0);
+        this.modelMatrix.rotate(angle, 0.0, 1.0, 0.0);
 
         // Calculate model view projection matrix and pass it to u_MvpMatrix
         let mvpMatrix:Matrix4=new Matrix4();
-        mvpMatrix.set(this.mvpMatrix);
+        mvpMatrix.set(viewProjMatrix);
         mvpMatrix.multiply(this.modelMatrix);
-        GL.uniformMatrix4fv(this.u_MvpMatrix, false, mvpMatrix.elements);
-        GL.drawElements(GL.TRIANGLES, this.cube.numIndices, GL.UNSIGNED_BYTE, 0);   // Draw
+        GL.uniformMatrix4fv(u_MvpMatrix, false, mvpMatrix.elements);
+        GL.drawElements(GL.TRIANGLES, cube.numIndices, cube.indexBuffer.type, 0);   // Draw
+
     }
 
     update(): boolean {
