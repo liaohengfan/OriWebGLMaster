@@ -9,6 +9,7 @@ class Plane extends Geometry{
         this.vertices= new Float32Array([
             1.0, 1.0, 0.0,  -1.0, 1.0, 0.0,  -1.0,-1.0, 0.0,   1.0,-1.0, 0.0    // v0-v1-v2-v3
         ]);
+        this.normals=new Float32Array([]);
         this.texCoords=new Float32Array([1.0, 1.0,   0.0, 1.0,   0.0, 0.0,   1.0, 0.0]);
         this.indices= new Uint8Array([0, 1, 2,   0, 2, 3]);
         this.numIndices=this.indices.length;

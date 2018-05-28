@@ -49,7 +49,7 @@ function createProgram(gl:any, vshader:string, fshader:string) {
     // Check the result of linking
     let linked = gl.getProgramParameter(program, gl.LINK_STATUS);
     if (!linked) {
-        var error = gl.getProgramInfoLog(program);
+        let error = gl.getProgramInfoLog(program);
         console.log('Failed to link program: ' + error);
         gl.deleteProgram(program);
         gl.deleteShader(fragmentShader);
@@ -83,7 +83,7 @@ function loadShader(gl:any, type:any, source:string) {
     // Check the result of compilation
     let compiled:any = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
     if (!compiled) {
-        var error = gl.getShaderInfoLog(shader);
+        let error = gl.getShaderInfoLog(shader);
         console.log('Failed to compile shader: ' + error);
         gl.deleteShader(shader);
         return null;
@@ -100,7 +100,7 @@ function loadShader(gl:any, type:any, source:string) {
  */
 function getWebGLContext(canvas:HTMLCanvasElement, opt_debug:boolean=false) {
     // Get the rendering context for WebGL
-    var gl = WebGLUtils.setupWebGL(canvas);
+    let gl = WebGLUtils.setupWebGL(canvas);
     if (!gl) return null;
 
     // if opt_debug is explicitly false, create the context for debugging
