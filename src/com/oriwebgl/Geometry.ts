@@ -17,7 +17,7 @@ class Geometry{
         this.gl=gl;
     }
     initElementArrayBufferForLaterUse(gl:WebGLRenderingContext, data:any, type:number) {
-        let buffer:DefWebGLBuffer = gl.createBuffer();   // Create a buffer object
+        let buffer:DefWebGLBuffer = gl.createBuffer() as DefWebGLBuffer;   // Create a buffer object
         if (!buffer) {
             console.log('Failed to create the buffer object');
             return null;
@@ -32,7 +32,7 @@ class Geometry{
     }
 
     initArrayBufferForLaterUse(gl:WebGLRenderingContext, data:any, num:number, type:number):DefWebGLBuffer {
-        let buffer:DefWebGLBuffer = gl.createBuffer();   // Create a buffer object
+        let buffer:DefWebGLBuffer = gl.createBuffer() as DefWebGLBuffer;   // Create a buffer object
         if (!buffer) {
             console.log('Failed to create the buffer object');
             return null;

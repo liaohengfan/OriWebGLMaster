@@ -1,10 +1,12 @@
 import {DrawGLContainerBase} from "../ILearnDraw";
-import {msg} from "../tools/LHFTools";
-import {Matrix4, Vector3} from "../base/Matrix";
-import TextureQuad from "../chapter5/TextureQuad";
+import {Matrix4} from "../base/Matrix";
 import {DefWebGLBuffer} from "../oriwebgl/Core";
 import {Cube} from "../oriwebgl/Cube";
 import {Plane} from "../oriwebgl/Plane";
+
+
+const OFFSCREEN_WIDTH:number=256;
+const OFFSCREEN_HEIGHT:number=256;
 
 /** * 多个着色器 */
 class FrameBuffer extends DrawGLContainerBase {
@@ -17,21 +19,16 @@ class FrameBuffer extends DrawGLContainerBase {
 
     //视图矩阵
     mvpMatrix: Matrix4;//模型视图投影矩阵
-    mvpMatrixFBO: Matrix4;//模型视图投影矩阵
     modelMatrix:Matrix4;
-
-    //视点位置
-    eyePoint:number[]=[0,0,15];
 
     //单色着色器程序对象
     program: WebGLProgram;
+    u_MvpMatrix:WebGLUniformLocation;
+    a_Position:number;
 
     //立方体对象
     cube:Cube;
     plane:Plane;
-
-    //fbo
-    fbo:WebGLFramebuffer;
 
     //angle
     curAngle:number=0;
@@ -78,7 +75,7 @@ class FrameBuffer extends DrawGLContainerBase {
         GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_MIN_FILTER, GL.LINEAR);//配置纹理参数
         GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_S, GL.CLAMP_TO_EDGE);//配置纹理参数
         GL.texParameteri(GL.TEXTURE_2D, GL.TEXTURE_WRAP_T, GL.MIRRORED_REPEAT);//配置纹理参数
-        GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGB, GL.RGB, GL.UNSIGNED_BYTE, this.image);//配置纹理图像
+        GL.texImage2D(GL.TEXTURE_2D, 0, GL.RGBA,GL.RGBA,GL.UNSIGNED_BYTE, this.image);//配置纹理图像
 
         this.init();//初始化
     }
@@ -90,19 +87,18 @@ class FrameBuffer extends DrawGLContainerBase {
         this.cube=new Cube(this.gl);
         this.plane=new Plane(this.gl);
 
-        //
-        this.fbo=this.gl.createFramebuffer();
-
         //模型视图投影矩阵
         this.mvpMatrix = new Matrix4();
         this.mvpMatrix.setPerspective(30, this.container.clientWidth / this.container.clientHeight, 1, 100);
         this.mvpMatrix.lookAt(0,0,7, 0, 0, 0, 0, 1, 0);
 
-        this.mvpMatrixFBO=new Matrix4();
-        this.mvpMatrixFBO.setPerspective(30, this.container.clientWidth / this.container.clientHeight, 1, 100);
-        this.mvpMatrixFBO.lookAt(0,2,7, 0, 0, 0, 0, 1, 0);
-
         this.modelMatrix=new Matrix4();
+
+        //获取对象
+        this.u_MvpMatrix=GL.getUniformLocation(this.program,'u_MvpMatrix');
+        this.a_Position=GL.getAttribLocation(this.program,'a_Position');
+
+        this.initAttributeVariable(GL,this.a_Position,this.cube.vertexBuffer);
 
         //使用的着色器程序
         GL.useProgram(this.program);
@@ -118,8 +114,8 @@ class FrameBuffer extends DrawGLContainerBase {
     /**     * 动画     */
     animate():void{
         this.curAngle+=this.angleStep;
-        this.draw();
         this.curAngle=(this.curAngle%360);
+        this.draw();
 
     }
 
@@ -137,8 +133,22 @@ class FrameBuffer extends DrawGLContainerBase {
 
     /**     * 绘制     */
     draw(): void {
-        const GL:WebGLRenderingContext=this.gl;
-        GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+        const GL: WebGLRenderingContext = this.gl;
+        //GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+        //GL.clear(GL.COLOR_BUFFER_BIT | GL.DEPTH_BUFFER_BIT);
+        //GL.clearColor(0.0, 0.0, 0.0, 1.0);
+
+        // Calculate a model matrix
+        this.modelMatrix.setTranslate(0, 0.0, 0.0);
+        this.modelMatrix.rotate(20.0, 1.0, 0.0, 0.0);
+        this.modelMatrix.rotate(this.curAngle, 0.0, 1.0, 0.0);
+
+        // Calculate model view projection matrix and pass it to u_MvpMatrix
+        let mvpMatrix:Matrix4=new Matrix4();
+        mvpMatrix.set(this.mvpMatrix);
+        mvpMatrix.multiply(this.modelMatrix);
+        GL.uniformMatrix4fv(this.u_MvpMatrix, false, mvpMatrix.elements);
+        GL.drawElements(GL.TRIANGLES, this.cube.numIndices, GL.UNSIGNED_BYTE, 0);   // Draw
     }
 
     update(): boolean {
