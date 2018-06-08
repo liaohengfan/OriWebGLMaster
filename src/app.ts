@@ -138,14 +138,14 @@ class Demo {
 
         this.eidtorWebGL();
 
-        /**     * 动画     */
-        function enterframe() {
-            THAT.update();
-            requestAnimationFrame(enterframe);
-        }
-
-        enterframe();
+        this.enterframe();
     }
+
+    /**     * 动画     */
+    enterframe=()=>{
+        this.update();
+        requestAnimationFrame(this.enterframe);
+    };
 
     /**     * 更新     */
     update(): void {
