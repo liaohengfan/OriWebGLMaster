@@ -134,7 +134,7 @@ class ProgramObject extends DrawGLContainerBase {
         this.s_u_MvpMatrix = GL.getUniformLocation(this.solidProgram, 'u_MvpMatrix');
         this.s_u_NormalMatrix = GL.getUniformLocation(this.solidProgram, 'u_NormalMatrix');
 
-        // Get storage locations of attribute and uniform variables in program object for texture drawing
+        //获取程序变量地址
         this.t_a_Position = GL.getAttribLocation(this.textureProgram, 'a_Position');
         this.t_a_Normal = GL.getAttribLocation(this.textureProgram, 'a_Normal');
         this.t_a_TexCoord = GL.getAttribLocation(this.textureProgram, 'a_TexCoord');
@@ -165,14 +165,14 @@ class ProgramObject extends DrawGLContainerBase {
         this.drawCube(this.s_u_NormalMatrix,this.s_u_MvpMatrix,this.cube, -2, this.curAngle, this.mvpMatrix);   // Draw
 
         //纹理立方体配置
-        GL.useProgram(this.textureProgram);   // Tell that this program object is used
-        // Assign the buffer objects and enable the assignment
-        this.initAttributeVariable(GL, this.t_a_Position, this.cube.vertexBuffer);  // Vertex coordinates
-        this.initAttributeVariable(GL, this.t_a_Normal, this.cube.normalBuffer);    // Normal
-        this.initAttributeVariable(GL, this.t_a_TexCoord, this.cube.texCoordBuffer);// Texture coordinates
-        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.cube.indexBuffer); // Bind indices
+        GL.useProgram(this.textureProgram);
 
-        // Bind texture object to texture unit 0
+        this.initAttributeVariable(GL, this.t_a_Position, this.cube.vertexBuffer);
+        this.initAttributeVariable(GL, this.t_a_Normal, this.cube.normalBuffer);
+        this.initAttributeVariable(GL, this.t_a_TexCoord, this.cube.texCoordBuffer);
+        GL.bindBuffer(GL.ELEMENT_ARRAY_BUFFER, this.cube.indexBuffer);
+
+        //激活1号纹理并绑定纹理
         GL.activeTexture(GL.TEXTURE0);
         GL.bindTexture(GL.TEXTURE_2D, this.texture);
         //绘制纹理立方体
@@ -192,17 +192,17 @@ class ProgramObject extends DrawGLContainerBase {
     drawCube(u_NormalMatrix:WebGLUniformLocation,u_MvpMatrix:WebGLUniformLocation, cube:Cube, x:number, angle:number, viewProjMatrix:Matrix4) {
         const GL: WebGLRenderingContext = this.gl;
 
-        // Calculate a model matrix
+        //设置模型矩阵
         this.modelMatrix.setTranslate(x, 0.0, 0.0);
         this.modelMatrix.rotate(20.0, 1.0, 0.0, 0.0);
         this.modelMatrix.rotate(angle, 0.0, 1.0, 0.0);
 
-        // Calculate transformation matrix for normals and pass it to u_NormalMatrix
+        //设置法向量
         this.normalMatrix.setInverseOf(this.modelMatrix);
         this.normalMatrix.transpose();
         GL.uniformMatrix4fv(u_NormalMatrix, false, this.normalMatrix.elements);
 
-        // Calculate model view projection matrix and pass it to u_MvpMatrix
+        //设置视图模型矩阵
         let mvpMatrix:Matrix4=new Matrix4();
         mvpMatrix.set(viewProjMatrix);
         mvpMatrix.multiply(this.modelMatrix);
