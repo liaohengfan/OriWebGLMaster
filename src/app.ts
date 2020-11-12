@@ -1,4 +1,4 @@
-import './common.css';
+import './common.scss';
 import * as d3 from 'd3';
 import {getWebGLContext} from './com/base/Utils';
 import {DrawGLContainerBase} from "./com/ILearnDraw";
@@ -57,61 +57,61 @@ class Demo {
     eidtorWebGL() {
         const GL: WebGLRenderingContext = this.gl;
 
-        //章节2
-        //new DrawAPoint(GL,this.container); //绘制一个点
-        //new ClickedPoints(GL,this.container);//鼠标点击绘制点
-
-        //章节3
-        //new VertexBuffer(GL,this.container);//顶点缓冲对象
-        //new Translated(GL,this.container);//变化
-        //new Rotated(GL,this.container);//旋转
-        //new Matrix(GL,this.container);//矩阵操作
-
-        //章节4
-        //new RotatedMatrix4(GL,this.container);//Matrix4 操作
-        //this.curDrawBase=new RotatedTranslated(GL,this.container);//Matrix4 操作 平移旋转
-
-        //章节5
-        //new MultiAttributeSize(GL,this.container);//多个缓冲
-        //new MultiAttriSizeInterleaved(GL,this.container);//数组多项顶点数据
-        //new MultiAttributeColor(GL,this.container);//多顶点颜色
-        //new ViewFragmentColor(GL,this.container);//片元着色器相对屏幕位置调整颜色
-        //new TextureQuad(GL,this.container);//纹理
-        //new TextureMask(GL,this.container);//纹理遮罩-相乘
-
-        //章节7
-        //new LookAtTriangles(GL,this.container);// 视角观看三角形
-        //new LookAtRotatedTriangles(GL,this.container);// 视角观看旋转三角形
-        //new LookAtRotateTriangleMVMatrix(GL,this.container);// 模型视图矩阵 外部计算
-        //new LookAtTriangleWithKeys(GL,this.container);// 键盘控制视点
-        //new OrthoVisualSpace(GL,this.container);// 正交可视空间
-        //new LookAtTriangleWithKeysView(GL,this.container);// 正交可视空间  模型矩阵
-        //new PerspectiveView(GL,this.container);// 透视可视空间
-        //new PerspectiveViewMVP(GL,this.container);// 透视可视空间-顶点偏移
-        //new ModelViewPersMatrix(GL,this.container);// 模型视图 投影矩阵
-        //new PerspectiveDepth(GL,this.container);// 模型视图  深度测试
-        //new ZFighting(GL,this.container);// 模型视图  深度冲突
-        //new HelloCube(GL,this.container);// Hello Cube  初试 立方体
-        //new ColoredCube(GL,this.container);// Cube  各面颜色不同立方体
-
-        //章节8
-        //new LightedCube(GL,this.container);// Cube  光照
-        //new LightedCubeAmbient(GL,this.container);// Cube  光照-环境光
-        //new LightedTranlatedRotateCube(GL,this.container);// Cube  光照-环境光-旋转 偏移 盒子 计算光照
-        //new PointLightedCube(GL,this.container);// Cube  光照-环境光-点光源
-        //this.curDrawBase=new PointLightedCubeAni(GL,this.container);// Cube  光照-环境光-点光源-旋转
-        //this.curDrawBase=new PointLightedCubeFragment(GL,this.container);// Cube  光照-环境光-点光源-旋转 -逐片元渲染光效
-
-        //章节9
-        //this.curDrawBase = new InitShaderDetails(GL, this.container);//着色器初始化细节
-
-        //章节10
-        //this.curDrawBase= new Fog(GL,this.container);//雾化  大气效果
-        //new DrawRoundPoint(GL,this.container);//圆形的点
-        //new LookAtBlendedTriangles(GL,this.container);//颜色混合
-        //this.curDrawBase=new BlendedCube(GL,this.container);//颜色混合 Cube
-        //this.curDrawBase=new ProgramObject(GL,this.container);//多个着色器 Cube
-        this.curDrawBase=new FrameBuffer(GL,this.container);//帧缓冲区
+        // 章节2
+        // new DrawAPoint(GL,this.container); //绘制一个点
+        // new ClickedPoints(GL,this.container);//鼠标点击绘制点
+        //
+        // 章节3
+        // new VertexBuffer(GL,this.container);//顶点缓冲对象
+        // new Translated(GL,this.container);//变化
+        // new Rotated(GL,this.container);//旋转
+        // new Matrix(GL,this.container);//矩阵操作
+        //
+        // 章节4
+        // new RotatedMatrix4(GL,this.container);//Matrix4 操作
+        // this.curDrawBase=new RotatedTranslated(GL,this.container);//Matrix4 操作 平移旋转
+        //
+        // 章节5
+        // new MultiAttributeSize(GL,this.container);//多个缓冲
+        // new MultiAttriSizeInterleaved(GL,this.container);//数组多项顶点数据
+        // new MultiAttributeColor(GL,this.container);//多顶点颜色
+        // new ViewFragmentColor(GL,this.container);//片元着色器相对屏幕位置调整颜色
+        // new TextureQuad(GL,this.container);//纹理
+        // new TextureMask(GL,this.container);//纹理遮罩-相乘
+        //
+        // 章节7
+        // new LookAtTriangles(GL,this.container);// 视角观看三角形
+        // new LookAtRotatedTriangles(GL,this.container);// 视角观看旋转三角形
+        // new LookAtRotateTriangleMVMatrix(GL,this.container);// 模型视图矩阵 外部计算
+        // new LookAtTriangleWithKeys(GL,this.container);// 键盘控制视点
+        // new OrthoVisualSpace(GL,this.container);// 正交可视空间
+        // new LookAtTriangleWithKeysView(GL,this.container);// 正交可视空间  模型矩阵
+        // new PerspectiveView(GL,this.container);// 透视可视空间
+        // new PerspectiveViewMVP(GL,this.container);// 透视可视空间-顶点偏移
+        // new ModelViewPersMatrix(GL,this.container);// 模型视图 投影矩阵
+        // new PerspectiveDepth(GL,this.container);// 模型视图  深度测试
+        // new ZFighting(GL,this.container);// 模型视图  深度冲突
+        // new HelloCube(GL,this.container);// Hello Cube  初试 立方体
+        // new ColoredCube(GL,this.container);// Cube  各面颜色不同立方体
+        //
+        // 章节8
+        // new LightedCube(GL,this.container);// Cube  光照
+        // new LightedCubeAmbient(GL,this.container);// Cube  光照-环境光
+        // new LightedTranlatedRotateCube(GL,this.container);// Cube  光照-环境光-旋转 偏移 盒子 计算光照
+        // new PointLightedCube(GL,this.container);// Cube  光照-环境光-点光源
+        // this.curDrawBase=new PointLightedCubeAni(GL,this.container);// Cube  光照-环境光-点光源-旋转
+        // this.curDrawBase=new PointLightedCubeFragment(GL,this.container);// Cube  光照-环境光-点光源-旋转 -逐片元渲染光效
+        //
+        // 章节9
+        // this.curDrawBase = new InitShaderDetails(GL, this.container);//着色器初始化细节
+        //
+        // 章节10
+        this.curDrawBase= new Fog(GL,this.container);//雾化  大气效果
+        // new DrawRoundPoint(GL,this.container);//圆形的点
+        // new LookAtBlendedTriangles(GL,this.container);//颜色混合
+        // this.curDrawBase=new BlendedCube(GL,this.container);//颜色混合 Cube
+        // this.curDrawBase=new ProgramObject(GL,this.container);//多个着色器 Cube
+        // this.curDrawBase = new FrameBuffer(GL, this.container);//帧缓冲区
 
     }
 
@@ -142,7 +142,7 @@ class Demo {
     }
 
     /**     * 动画     */
-    enterframe=()=>{
+    enterframe = () => {
         this.update();
         requestAnimationFrame(this.enterframe);
     };
@@ -160,7 +160,7 @@ class Demo {
         let height_: number = this.container.clientHeight;
         this.canvas.width = width_;
         this.canvas.height = height_;
-        if(this.curDrawBase){
+        if (this.curDrawBase) {
             this.curDrawBase.resize();
         }
     }

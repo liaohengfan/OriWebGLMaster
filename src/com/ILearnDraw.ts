@@ -27,8 +27,10 @@ class DrawGLContainerBase implements ILearnDraw{
      * @param {string} name
      */
     getGLSL(url:string,name:string){
-        GLSLTools.getGLSL(url,name,(vshader:string,fshader:string)=> {
-            this.initShader(vshader,fshader,name);
+        GLSLTools.getGLSL(url,name).then(res=>{
+            this.initShader(res.vertexShader,res.fragmentShader,name);
+        }).catch(error=>{
+            console.error("获取glsl失败:"+error);
         });
     }
 

@@ -1,37 +1,32 @@
 {
-  "name": "LittlePlanetView",
+  "name": "webpackoriwebglreview",
   "version": "1.0.0",
-  "description": "webpack typescript learn",
+  "description": "",
   "main": "index.js",
-  "dependencies": {
-    "tween.js":"",
-    "d3":"",
-    "underscore": "",
-    "@types/tween.js":"",
-    "@types/d3":"",
-    "@types/underscore":""
-  },
-  "devDependencies": {
-    "typescript": "",
-    "path": "^0.12.7",
-    "webpack": "",
-    "typings": "",
-    "tslint": "",
-    "tslint-loader": "",
-    "style-loader": "",
-    "url-loader": "",
-    "html-loader": "",
-    "awesome-typescript-loader": "",
-    "html-webpack-plugin": "",
-    "copy-webpack-plugin": "",
-    "file-loader": "",
-    "webpack-dev-server": "",
-    "css-loader": ""
-  },
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server --devtool eval --progress --colors --content-base build"
   },
-  "author": "liaohengfan@yeah.net",
-  "license": "ISC"
+  "devDependencies": {
+    "awesome-typescript-loader": "^5.2.1",
+    "clean-webpack-plugin": "^1.0.1",
+    "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^2.1.0",
+    "file-loader": "^3.0.1",
+    "html-webpack-plugin": "^3.2.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "ts-loader": "^5.3.1",
+    "typescript": "^3.2.2",
+    "webpack": "^4.28.0",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^6.2.0"
+  }
 }

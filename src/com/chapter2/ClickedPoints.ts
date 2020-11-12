@@ -76,10 +76,11 @@ class ClickedPoints extends DrawGLContainerBase{
         //GL.drawArrays(GL.POINTS,0,1);
     }
 
-    resize(){
+    resize():boolean{
         this.containerRect=this.container.getBoundingClientRect();
         this.centerPoint.x=this.containerRect.width/2;
         this.centerPoint.y=this.containerRect.height/2;
+        return true;
     }
 
     update(): boolean {

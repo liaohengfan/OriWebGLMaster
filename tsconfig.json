@@ -1,21 +1,14 @@
 {
   "compilerOptions": {
-    "outFile": "dist/earth.amd.js",
-    "module": "amd",
-    "target": "es5",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments":true,
-    "lib": [ "es2015", "dom" ],
-    "noImplicitAny": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "sourceMap": false
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true
   },
-  "files": [
-    "src/app.ts"
+  "extends": "./node_modules/assemblyscript/std/portable.json",
+  "include": [
+    "./**/*.ts"
   ],
   "exclude": [
-    "node_modules/*"
+    "node_modules"
   ]
 }
